@@ -29,14 +29,83 @@
             BaseSpd = _spd;
             MoveRange = _moveRange;
         }
+        public void modificarBases()
+        {
 
+        }
         public virtual bool Interact(Unit otherUnit)
         {
+
+            if (UnitClass==EUnitClass.Villager)
+            {
+                goto CantAtackO;
+            }
+
+            else if (UnitClass==EUnitClass.Squire && otherUnit.UnitClass!=EUnitClass.Villager)
+            {
+                goto CanAtackO;
+            }
+            else if (UnitClass == EUnitClass.Soldier && otherUnit.UnitClass != EUnitClass.Villager)
+            {
+                goto CanAtackO;
+            }
+            else if (UnitClass == EUnitClass.Ranger && otherUnit.UnitClass != EUnitClass.Mage || otherUnit.UnitClass != EUnitClass.Dragon )
+            {
+                goto CanAtackO;
+            }
+            else if (UnitClass == EUnitClass.Mage && otherUnit.UnitClass != EUnitClass.Mage )
+            {
+                goto CanAtackO;
+            }
+            else if (UnitClass == EUnitClass.Imp && otherUnit.UnitClass != EUnitClass.Dragon)
+            {
+                goto CanAtackO;
+            }
+            else if (UnitClass == EUnitClass.Orc && otherUnit.UnitClass != EUnitClass.Dragon)
+            {
+                goto CanAtackO;
+
+            }
+
+            else if (UnitClass == EUnitClass.Dragon)
+            {
+                goto CanAtackO;
+            }
+
+            else
+            {
+                goto CantAtackO;
+            }
+        CanAtackO:
+            return true;
+        CantAtackO:
             return false;
         }
 
-        public virtual bool Interact(Prop prop) => false;
+        public virtual bool Interact(Prop prop)
+        {
+            if (UnitClass == EUnitClass.Villager)
+            {
+                goto CanInteract;
+            }
+            else
+            {
+                goto CantInteract;
+
+            }
+
+        CanInteract:
+            return true;
+        CantInteract:
+            return false;
+        }
 
         public bool Move(Position targetPosition) => false;
+
+        
+            
+
+            
+        
     }
 }

@@ -10,8 +10,51 @@
             Potential = _potential;
         }
 
+
+
+
+
         public virtual bool ChangeClass(EUnitClass newClass)
         {
+
+
+            if (newClass == UnitClass)
+            {
+                goto CantChange;
+            }
+
+            else if (UnitClass == EUnitClass.Villager)
+            {
+                goto CantChange;
+            }
+            else if (UnitClass == EUnitClass.Soldier && newClass == EUnitClass.Squire)
+            {
+                goto CanChange;
+            }
+            
+            else if (UnitClass == EUnitClass.Squire && newClass == EUnitClass.Soldier)
+            {
+                goto CanChange;
+            }
+            else if (UnitClass == EUnitClass.Mage && newClass == EUnitClass.Ranger)
+            {
+                goto CanChange;
+            }
+
+            else if (UnitClass == EUnitClass.Ranger && newClass == EUnitClass.Mage)
+            {
+                goto CanChange;
+            }
+            else
+            {
+                goto CantChange;
+            }
+
+
+
+        CanChange:
+            return true;
+        CantChange:
             return false;
         }
     }
