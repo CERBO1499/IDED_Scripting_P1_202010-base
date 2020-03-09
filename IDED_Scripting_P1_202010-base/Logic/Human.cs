@@ -8,54 +8,117 @@
             : base(_unitClass, _atk, _def, _spd, _moveRange)
         {
             Potential = _potential;
+            switch (_unitClass)
+            {
+                case EUnitClass.Imp:
+                case EUnitClass.Dragon:
+                case EUnitClass.Orc:
+                    _unitClass = EUnitClass.Villager;
+                    UnitTypeCreation(_unitClass);
+                    break;
+                default:
+                    break;
+            }
         }
-
-
-
-
 
         public virtual bool ChangeClass(EUnitClass newClass)
         {
+            bool ret = false;
 
-
-            if (newClass == UnitClass)
+            switch (UnitClass)
             {
-                goto CantChange;
+                case EUnitClass.Villager:
+                    switch (newClass)
+                    {
+                        default:
+                            break;
+                    }
+                    break;
+                case EUnitClass.Squire:
+                    switch (newClass)
+                    {
+                        case EUnitClass.Soldier:
+                            goto Realizado;
+                        default:
+                            break;
+                       
+                    }
+                    break;
+                case EUnitClass.Soldier:
+                    switch (newClass)
+                    {
+                        case EUnitClass.Squire:
+                            goto Realizado;
+                        default:
+                            break;
+
+                    }
+                    break;
+                case EUnitClass.Ranger:
+                    switch (newClass)
+                    {
+                        case EUnitClass.Mage:
+                            goto Realizado;
+                        default:
+                            break;
+
+                    }
+                    break;
+                case EUnitClass.Mage:
+                    switch (newClass)
+                    {
+                        case EUnitClass.Ranger:
+                            goto Realizado;
+                        default:
+                            break;
+
+                    }
+                    break;
+                case EUnitClass.Imp:
+                    switch (newClass)
+                    {
+                        default:
+                            break;
+                    }
+                    break;
+                case EUnitClass.Orc:
+                    switch (newClass)
+                    {
+                        default:
+                            break;
+                    }
+                    break;
+                case EUnitClass.Dragon:
+                    switch (newClass)
+                    {
+                        default:
+                            break;
+                    }
+                    break;
+                default:
+                    break;
             }
 
-            else if (UnitClass == EUnitClass.Villager)
-            {
-                goto CantChange;
-            }
-            else if (UnitClass == EUnitClass.Soldier && newClass == EUnitClass.Squire)
-            {
-                goto CanChange;
-            }
+
+
+
+
+
+
+            Realizado:
+            UnitTypeCreation(newClass);
+            ret = true;
             
-            else if (UnitClass == EUnitClass.Squire && newClass == EUnitClass.Soldier)
-            {
-                goto CanChange;
-            }
-            else if (UnitClass == EUnitClass.Mage && newClass == EUnitClass.Ranger)
-            {
-                goto CanChange;
-            }
-
-            else if (UnitClass == EUnitClass.Ranger && newClass == EUnitClass.Mage)
-            {
-                goto CanChange;
-            }
-            else
-            {
-                goto CantChange;
-            }
+            return ret;
 
 
 
-        CanChange:
-            return true;
-        CantChange:
-            return false;
         }
+
+        public override float Attack => base.ClampFloat((float)BaseAtk*(1+BaseAtkAdd+Potential));
+        public override float Defense => base.ClampFloat((float)BaseDef* (1 +BaseDefAdd + Potential));
+        public override float Speed => base.ClampFloat((float)BaseSpd * (1 + BaseSpdAdd + Potential));
+
+
     }
 }

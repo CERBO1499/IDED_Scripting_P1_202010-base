@@ -2,11 +2,14 @@
 {
     public struct Prop
     {
-        public EPropType PropType { get; private set; }
+
+        private EPropType propType;
+
+        public EPropType PropType { get=>propType; private set=>propType=value; }
 
         public Prop(EPropType _propType)
         {
-            PropType = _propType;
+            propType = _propType;
         }
     }
 }
